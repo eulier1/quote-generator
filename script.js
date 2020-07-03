@@ -24,13 +24,10 @@ async function getQuoteAPI() {
     try {
         const response = await fetch(proxyUrl + apiUrl)
         const data = await response.json()
-        // Sanatization
-        const authorTextNode = document.createTextNode(data.quoteAuthor)
-        const quoteTextNode = document.createTextNode(data.quoteText)
         if (data.quoteAuthor === '') {
-            authorText.append('Unknown')
+            authorText.innerText = 'Unknown'
         } else {
-            authorText.append(authorTextNode)
+            authorText.innerText = data.quoteAuthor
         }
 
         if (data.quoteText.lenght > 50) {
@@ -38,7 +35,7 @@ async function getQuoteAPI() {
         } else {
             quoteText.classList.remove('long-quote')
         }
-        quoteText.append(quoteTextNode)
+        quoteText.innerText = data.quoteText
         removeLoadingSpinner()
     } catch (error) {
         getQuoteAPI()
